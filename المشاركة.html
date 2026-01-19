@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>انشر اللعبة - تحدى أصدقائك</title>
+    <style>
+        body {
+            background-color: #ffffff; /* الخلفية بيضاء كما طلبتِ */
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #000;
+        }
+
+        .share-container {
+            text-align: center;
+            background: #f9f9f9;
+            padding: 50px;
+            border-radius: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 5px solid #ccac00; /* الإطار الأصفر */
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .emoji-header {
+            font-size: 100px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #000;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .share-options {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* تنسيق أزرار المشاركة */
+        .share-btn {
+            text-decoration: none;
+            padding: 20px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            transition: transform 0.3s;
+        }
+
+        .share-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .whatsapp { background-color: #25D366; }
+        .facebook { background-color: #1877F2; }
+
+        /* زر العودة */
+        .back-home {
+            margin-top: 40px;
+            display: inline-block;
+            color: #ccac00;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-bottom: 2px solid #ccac00;
+            padding-bottom: 5px;
+        }
+
+        .back-home:hover {
+            color: #000;
+            border-color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="share-container">
+        <div class="emoji-header">📢</div>
+        <h1>انشر اللعبة</h1>
+        <p>هل استمتعت باللعب؟ شارك اللعبة مع أصدقائك وتحداهم الآن في مباراة X-O حماسية!</p>
+
+        <div class="share-options">
+            <a id="whatsapp-link" href="#" target="_blank" class="share-btn whatsapp">
+                مشاركة عبر واتساب 📱
+            </a>
+
+            <a id="facebook-link" href="#" target="_blank" class="share-btn facebook">
+                مشاركة عبر فيسبوك 💙
+            </a>
+        </div>
+
+        <a href="X-O.html" class="back-home">🔙 العودة إلى اللعب</a>
+    </div>
+
+    <script>
+        // هذا الكود يحدد الرابط الحالي للموقع ويرسله للأصدقاء
+        const gameUrl = window.location.origin; // سيأخذ رابط موقعك تلقائياً
+        const shareText = "تعال العب معي لعبة X-O المطورة! تصميمها رائع جداً، هل يمكنك هزيمتي؟ ادخل من هنا: ";
+
+        // إعداد روابط المشاركة
+        document.getElementById('whatsapp-link').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + gameUrl)}`;
+        document.getElementById('facebook-link').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(gameUrl)}`;
+    </script>
+
+</body>
+</html>

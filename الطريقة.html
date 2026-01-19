@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كيفية اللعب - X-O</title>
+    <style>
+        body {
+            background-color: #ffffff; /* الخلفية بيضاء */
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #000;
+        }
+
+        .info-container {
+            background: #f9f9f9;
+            padding: 40px;
+            border-radius: 30px;
+            border: 5px solid #ccac00; /* إطار أصفر */
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .big-icon {
+            font-size: 80px;
+        }
+
+        h1 {
+            color: #ccac00;
+            font-size: 2.2rem;
+            margin: 10px 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 15px;
+            border-right: 5px solid red; /* تمييز الخطوات باللون الأحمر */
+        }
+
+        .step-num {
+            background: red;
+            color: yellow;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .tip-box {
+            background-color: #fffde7;
+            border: 2px dashed #ccac00;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 25px;
+        }
+
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            background-color: red;
+            color: yellow;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            background-color: #d00000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="info-container">
+        <div class="header">
+            <div class="big-icon">❓</div>
+            <h1>طريقة اللعب</h1>
+            <p>اتبع هذه الخطوات البسيطة لتصبح محترفاً!</p>
+        </div>
+
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">تبدأ اللعبة باختيار نمط اللعب (ضد صديق أو ضد الروبوت الذكي).</div>
+        </div>
+
+        <div class="step" style="border-right-color: green;">
+            <div class="step-num" style="background: green;">2</div>
+            <div class="step-text">يتم توزيع الأدوار، حيث يبدأ اللاعب صاحب رمز <b>X</b> أولاً، ثم يليه لاعب رمز <b>O</b>.</div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text">هدف اللعبة هو وضع 3 رموز من نوعك في خط واحد (أفقي، رأسي، أو قطري).</div>
+        </div>
+
+        <div class="step" style="border-right-color: orange;">
+            <div class="step-num" style="background: orange;">4</div>
+            <div class="step-text">إذا امتلأت اللوحة بالكامل دون أن ينجح أي لاعب في تكوين خط، تنتهي المباراة بالتعادل.</div>
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 نصيحة للفوز:</strong> حاول دائماً السيطرة على المربع الموجود في المنتصف، فهو يمنحك أكبر عدد من الاحتمالات لتكوين خطوط!
+        </div>
+
+        <a href="index.html" class="back-btn">🔙 العودة للعب الآن</a>
+    </div>
+
+</body>
+</html>

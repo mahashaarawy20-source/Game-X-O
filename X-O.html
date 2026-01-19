@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>لعبة X-O الفنانين</title>
+ <style>
+body {
+    background-color: #ffffff; /* الخلفية بيضاء */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #000000; /* الكتابة سوداء */
+}
+
+.setup-container {
+    text-align: center;
+    background: #f9f9f9; /* خلفية فاتحة جداً لشاشة الإعدادات */
+    padding: 50px;
+    border-radius: 30px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1); /* ظل خفيف */
+}
+
+/* نصوص باللون الأصفر بحجم كبير (كما هي) */
+.yellow-text {
+    color: yellow; /* درجة أغمق قليلاً من الأصفر لتكون واضحة على الأبيض */
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.modes {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.mode-option {
+    cursor: pointer;
+    padding: 20px;
+    color: #000000; /* النص أسود */
+}
+
+.mode-option .icon {
+    font-size: 100px;
+    display: block;
+}
+
+.mode-option p {
+    font-size: 1.8rem;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* الزر البيضاوي الأحمر بالخط الأصفر */
+.oval-red-btn {
+    background-color: red;
+    color: yellow;
+    border: none;
+    padding: 20px 70px;
+    font-size: 2rem;
+    font-weight: bold;
+    border-radius: 60px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+/* أزرار X و O بنفس التنسيق المطلوب سابقاً */
+.btn-x {
+    background-color: green !important;
+    color: red !important;
+    font-size: 3rem;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #000;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-o {
+    background-color: red !important;
+    color: green !important;
+    font-size: 3rem;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #000;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* واجهة اللعبة */
+.main-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.thinker {
+    font-size: 120px;
+    position: relative;
+    color: #000; /* أي نص هنا يصبح أسود */
+}
+
+.symbol-above {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 45px;
+    font-weight: bold;
+    color: #000; /* الرمز فوق الرأس أسود */
+}
+
+#status {
+    font-size: 3rem;
+    margin-bottom: 30px;
+    color: yellow; /* اللون الأصفر للحالة */
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 120px);
+    grid-gap: 15px;
+    background-color: #ddd; /* لون رمادي فاتح لخلفية اللوحة */
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.cell {
+    width: 120px;
+    height: 120px;
+    background-color: #fff;
+    border: 2px solid #000; /* حدود سوداء للمربعات */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* الزر الدائري اعد اللعب */
+#restart {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: red;
+    color: yellow;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 30px;
+}
+.B2 button {
+  background-color:yellow; 
+  color:red; 
+  padding: 5px 20px;
+  border: none; 
+  border-radius: 100px;
+  cursor: pointer; 
+  font-size: 40px;
+  transition: 0.3s; 
+}
+ </style>
+</head>
+<body>
+    <div id="setup-screen" class="setup-container">
+        <h2 class="yellow-text">اختر نمط اللعب</h2>
+        <div class="modes">
+            <div class="mode-option" id="mode-pvp">
+                <span class="icon">👥</span>
+                <p>لاعبين</p>
+            </div>
+            <div class="mode-option" id="mode-pvc">
+                <span class="icon">🤖</span>
+                <p>ضد الآلي</p>
+            </div>
+        </div>
+
+        <h2 class="yellow-text">اختر رمزك</h2>
+        <div class="symbols">
+            <button class="symbol-btn btn-x" id="choose-x">X</button>
+            <button class="symbol-btn btn-o" id="choose-o">O</button>
+        </div>
+        <button id="start-game" class="oval-red-btn" style="display:none;">ابدأ اللعب</button>
+    </div>
+
+    <div id="game-screen" class="main-wrapper" style="display:none;">
+        <div class="player-side">
+            <div class="thinker">🤔<span class="symbol-above">X</span></div>
+        </div>
+
+        <div class="container">
+            <h1 id="status">دور اللاعب X</h1>
+            <div class="board" id="board">
+                <div class="cell" data-index="0"></div>
+                <div class="cell" data-index="1"></div>
+                <div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div>
+                <div class="cell" data-index="4"></div>
+                <div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div>
+                <div class="cell" data-index="7"></div>
+                <div class="cell" data-index="8"></div>
+            </div>
+            <button id="restart">اعد اللعب</button>
+        </div>
+
+        <div class="player-side">
+            <div class="thinker">🤔<span class="symbol-above">O</span></div>
+        </div>
+
+    </div>
+
+       <script>
+ let currentPlayer = "X";
+let userSymbol = "X";
+let gameMode = "pvp"; 
+let gameState = ["", "", "", "", "", "", "", "", ""];
+let gameActive = true;
+
+const setupScreen = document.getElementById('setup-screen');
+const gameScreen = document.getElementById('game-screen');
+const statusText = document.getElementById('status');
+const cells = document.querySelectorAll('.cell');
+
+// وظائف الاختيار من شاشة الإعدادات
+document.getElementById('mode-pvp').onclick = () => { gameMode = "pvp"; updateSelection('modes', 'mode-pvp'); };
+document.getElementById('mode-pvc').onclick = () => { gameMode = "pvc"; updateSelection('modes', 'mode-pvc'); };
+document.getElementById('choose-x').onclick = () => { userSymbol = "X"; updateSelection('symbols', 'choose-x'); };
+document.getElementById('choose-o').onclick = () => { userSymbol = "O"; updateSelection('symbols', 'choose-o'); };
+
+function updateSelection(group, id) {
+    if(group === 'modes') {
+        document.querySelectorAll('.mode-option').forEach(el => el.style.border = "none");
+        document.getElementById(id).style.border = "2px solid yellow";
+    }
+    if(group === 'symbols') {
+        document.querySelectorAll('.symbol-btn').forEach(el => el.classList.remove('selected'));
+        document.getElementById(id).classList.add('selected');
+    }
+    document.getElementById('start-game').style.display = 'inline-block';
+}
+
+// عند الضغط على ابدأ اللعب
+document.getElementById('start-game').onclick = () => {
+    setupScreen.style.display = 'none';
+    gameScreen.style.display = 'flex';
+    restartGame();
+};
+
+function handleCellClick(e) {
+    const idx = e.target.getAttribute('data-index');
+    if (gameState[idx] !== "" || !gameActive) return;
+
+    // في حال اللعب ضد الآلي، نضمن أن اللاعب البشري هو من يضغط فقط في دوره
+    if (gameMode === "pvc" && currentPlayer !== userSymbol) return;
+
+    makeMove(idx, currentPlayer);
+    
+    // إذا كان النمط ضد الآلي واللعبة ما زالت مستمرة، يلعب الآلي بعد نصف ثانية
+    if (gameActive && gameMode === "pvc") {
+        setTimeout(computerMove, 500);
+    }
+}
+
+function makeMove(idx, player) {
+    gameState[idx] = player;
+    cells[idx].innerText = player;
+    cells[idx].style.color = (player === "X") ? "red" : "green";
+    
+    if (checkWinner()) return;
+
+    // تبديل الأدوار
+    currentPlayer = (currentPlayer === "X") ? "O" : "X";
+    statusText.innerText = `دور اللاعب ${currentPlayer}`;
+    statusText.style.color = "yellow";
+}
+
+function computerMove() {
+    if (!gameActive) return;
+    
+    let emptyCells = gameState.map((v, i) => v === "" ? i : null).filter(v => v !== null);
+    if (emptyCells.length > 0) {
+        let randomIdx = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        makeMove(randomIdx, currentPlayer);
+    }
+}
+
+function checkWinner() {
+    const winPatterns = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    let won = winPatterns.some(p => gameState[p[0]] && gameState[p[0]] === gameState[p[1]] && gameState[p[0]] === gameState[p[2]]);
+
+    if (won) {
+        if (currentPlayer === "X") { 
+            statusText.innerText = "فاز X"; 
+            statusText.style.color = "red"; 
+        } else { 
+            statusText.innerText = "فار O"; 
+            statusText.style.color = "green"; 
+        }
+        gameActive = false;
+        return true;
+    }
+    if (!gameState.includes("")) {
+        statusText.innerText = "تعادل";
+        statusText.style.color = "yellow";
+        gameActive = false;
+        return true;
+    }
+    return false;
+}
+
+function restartGame() {
+    gameState = ["", "", "", "", "", "", "", "", ""];
+    gameActive = true;
+    
+    // التعديل الأساسي: اللاعب الذي تم اختياره هو من يبدأ دائماً
+    currentPlayer = userSymbol; 
+    
+    statusText.innerText = `دور اللاعب ${currentPlayer}`;
+    statusText.style.color = "yellow";
+    cells.forEach(c => {
+        c.innerText = "";
+        c.style.color = "black";
+    });
+}
+
+cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+document.getElementById('restart').onclick = restartGame;
+
+       </script>
+       <div class="B2">
+                  <a href="المشاركة.html">
+  <button>شاركونا</button></a>
+  <br> <br> <br>
+  <a href="الطريقة.html">
+  <button>كيف نلعب</button></a>  </div>
+</body>
+</html>
